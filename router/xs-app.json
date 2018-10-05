@@ -1,0 +1,18 @@
+{
+  "welcomeFile": "index.html",
+  "logout": {
+    "logoutEndpoint": "/logout",
+    "logoutPage": "/"
+  },
+  "routes": [
+    {
+      "source": "^/testEndpoint$",
+      "destination": "test_endpoint_d041287",
+      "authenticationType": "xsuaa",
+      "scope": {
+        "GET": "$XSAPPNAME.User",
+        "default": "$XSAPPNAME.User"
+      }
+    }
+  ]
+}

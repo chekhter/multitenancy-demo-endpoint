@@ -1,0 +1,17 @@
+{
+  "dependencies": {
+    "express": "latest",
+    "passport": "latest",
+    "@sap/xssec": "latest",
+    "@sap/xsenv": "latest"
+  },
+  "main": "server.js",
+  "name": "jsmt-sample-endpoint-d041287",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": "8.x"
+  },
+  "version": "1.0.0"
+}

@@ -1,0 +1,30 @@
+---
+applications:
+- name: ar-jsmt-sample-endpoint-d041287
+  path: ./router
+  memory: 64m
+  disk_quota: 128m
+  env:
+    destinations: >
+      [
+        {"name": "test_endpoint_d041287",
+         "url": "https://jsmt-sample-endpoint-d041287.cfapps.sap.hana.ondemand.com",
+         "forwardAuthToken": true}
+      ]
+    TENANT_HOST_PATTERN: "^(.*)-jsmt-endpoint.cfapps.sap.hana.ondemand.com"
+  services:
+  - jsmt-sample-uaa
+
+- name: jsmt-sample-endpoint-d041287
+  path: ./app
+  memory: 64m
+  disk_quota: 256m
+  env:
+    SAP_JWT_TRUST_ACL: >
+      [
+        {"clientid":"*","identityzone":"*"}
+      ]
+  services:
+  - jsmt-sample-uaa
+  - jsmt-sample-jobscheduler
+ 
