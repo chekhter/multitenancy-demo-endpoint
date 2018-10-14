@@ -26,7 +26,7 @@ function hasScope(scopeName) {
 function testEndpoint() {
 	var app = require("express").Router();
 	
-	app.get('/', hasScope("SCHEDULER"), function(req, res) {
+	app.get('/', hasScope("JOBSCHEDULER"), function(req, res) {
 		console.log("Endpoint triggered via jobscheduler");
 		res.status(201).json({success: true});});
 	return app;
