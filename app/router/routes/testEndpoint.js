@@ -12,18 +12,17 @@ function hasScope(aScopes) {
             return;
         }
 
-        while (aScopes.length) {
-        	var scopeName = aScopes.shift();
-            console.log(`Verifying scope (${scopeName}) in jwt`);
-            if (request.authInfo.checkLocalScope(scopeName)) {
+        console.log(`Probing the scopes (${JSON.stringify(aScopes)})`);
+        for (var i=0; i<aScopes.length; i++) {
+            console.log(`Verifying scope (${aScopes[i]}) in jwt`);
+            if (request.authInfo.checkLocalScope(aScopes[i])) {
                 next();
+                return;
             }
         }
-        console.log(`Missing the expected scopes (${JSON.stringify(aScopes)})`);
         response.status(403).end('Forbidden');
     };
 }
-
 
 function testEndpoint() {
 	var app = require("express").Router();
