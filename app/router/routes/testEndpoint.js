@@ -4,7 +4,7 @@
 module.exports = testEndpoint;
 
 
-function hasScope(scopeName) {
+function hasScope(aScopes) {
     return function (request, response, next) {
         if (!request.authInfo) {
             console.log('Error creating SecurityContext');
@@ -12,13 +12,15 @@ function hasScope(scopeName) {
             return;
         }
 
-        console.log(`Verifying scope (${scopeName}) in jwt`);
-        if (!request.authInfo.checkLocalScope(scopeName)) {
-            console.log(`Missing the expected scope (${scopeName})`);
-            response.status(403).end('Forbidden');
-        } else {
-            next();
+        while (aScopes.length) {
+        	var scopeName = aScopes.shift();
+            console.log(`Verifying scope (${scopeName}) in jwt`);
+            if (request.authInfo.checkLocalScope(scopeName)) {
+                next();
+            }
         }
+        console.log(`Missing the expected scopes (${JSON.stringify(aScopes)})`);
+        response.status(403).end('Forbidden');
     };
 }
 
@@ -26,7 +28,7 @@ function hasScope(scopeName) {
 function testEndpoint() {
 	var app = require("express").Router();
 	
-	app.get('/', hasScope("JOBSCHEDULER"), function(req, res) {
+	app.get('/', hasScope(["JOBSCHEDULER", "User"]), function(req, res) {
 		console.log("Endpoint triggered via jobscheduler");
 		res.status(201).json({success: true});});
 	return app;
